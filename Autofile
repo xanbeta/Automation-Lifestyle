@@ -1,0 +1,106 @@
+'Send Email to Recipients for Notification of Start Job
+'========================================================================================================
+' Set oolApp = CreateObject("Outlook.Application")
+  ' Set email = oolApp.CreateItem(0)
+  ' email.Recipients.Add("Add recipient email here")
+
+  ' ' Create the body of the email
+  ' MailBody = "<!DOCTYPE HTML PUBLIC ""-//W3C//DTD W3 HTML//EN"">"
+  ' MailBody = MailBody & "<HTML>" & vbcrlf
+  ' MailBody = MailBody & "<HEAD><TITLE>No Invoices</TITLE></HEAD>"
+  ' MailBody = MailBody & "<BODY>" & vbcrlf
+  ' MailBody = MailBody & "<B>For Your Information</B>,<BR><BR>"
+  ' MailBody = MailBody & "--Sent from Central Registry Migration Station.<BR><BR>"
+  ' MailBody = MailBody & "</BODY></HTML>"
+
+  ' ' Send the Email
+  ' email.Subject = "Data migration script has begun."
+  ' email.HTMLBody = MailBody
+  ' email.Send
+'========================================================================================================
+
+'Open up the SOS page
+ Dim objWshShell,IE,searchStr,DateInfo
+
+ Set objWshShell = Wscript.CreateObject("Wscript.Shell")
+ Set IE = CreateObject("InternetExplorer.Application")
+' 'searchStr = InputBox("Search")'
+
+ With IE
+   .Visible = True
+   .Navigate ""
+
+' 'Wait for Browser
+  Do While IE.Application.Busy Or _
+    IE.Application.readyState <> 4
+   ' 'DoEvents'
+  Loop
+   .Document.getElementsByName("client_id").Item(0).Value = ""
+   .Document.getElementsByName("web_password").Item(0).Value = ""
+   Do While .Busy
+     WScript.Sleep 100
+   Loop
+   .Document.getElementsByName("submit").Item(0).Click
+ ' ' Call IE.Document.Forms(0).Submit()
+   Do While IE.Application.Busy Or _
+    IE.Application.readyState <> 4
+   ' 'DoEvents'
+   Loop
+   .Document.getElementsByName("Submit").Item(0).Click
+  ' 'Call IE.Document.Forms(0).Submit()
+   Do While .Busy
+     WScript.Sleep 100
+   Loop
+   .navigate ""
+   Do While .Busy
+     WScript.Sleep 100
+   Loop
+   '.navigate ""
+  End With
+
+strFileUrl = "" 
+
+'Local drive's path where you want to save the file
+strSaveFileTo = "C:"
+
+
+' create a XMLHTTP object
+Set oHTTP = CreateObject("MSXML2.XMLHTTP")
+
+oHTTP.open "GET", strFileUrl, False
+oHTTP.send
+
+'create FSO object
+Set oFSO = CreateObject("Scripting.FileSystemObject")
+
+'If  strSaveFileTo file already exist, delete it
+If oFSO.FileExists(strSaveFileTo) Then
+  oFSO.DeleteFile(strSaveFileTo)
+End If
+
+If oHTTP.Status = 200 Then
+  Dim oADOStream
+  Set oADOStream = CreateObject("ADODB.Stream")
+  With oADOStream
+    .Type = 1
+    .Open
+    .Write oHTTP.ResponseBody
+    .SaveToFile strSaveFileTo
+    .Close
+  End With
+  set oADOStream = Nothing
+End If
+
+ 
+
+ 
+ 
+'============================================================================================
+' 'Open CR Migration application
+' Set objShell = WScript.CreateObject("WScript.Shell")
+
+' 'Set ObjExec = objShell.Exec("C:\Program Files (x86)\Notepad++\Notepad++.exe")
+' WScript.Sleep 100 
+ ' 'input username and password
+ ' objShell.SendKeys ""
+ ' 'send hotkeys to start migration
