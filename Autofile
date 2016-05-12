@@ -57,6 +57,33 @@
    Loop
    '.navigate ""
   End With
+  
+  WshShell.SendKeys "{tab}"
+WScript.Sleep 400
+ WshShell.SendKeys "{tab}"
+WScript.Sleep 400
+ WshShell.SendKeys "{tab}"
+WScript.Sleep 400
+ WshShell.SendKeys "{tab}"
+WScript.Sleep 400
+ WshShell.SendKeys "{tab}"
+WScript.Sleep 400
+ WshShell.SendKeys "{tab}"
+WScript.Sleep 400
+ WshShell.SendKeys "{tab}"
+WScript.Sleep 400
+ WshShell.SendKeys "{tab}"
+WScript.Sleep 400
+ WshShell.SendKeys "{tab}"
+WScript.Sleep 400
+ WshShell.SendKeys "{tab}"
+WScript.Sleep 400
+ WshShell.SendKeys "{tab}"
+WScript.Sleep 400
+ WshShell.SendKeys "{tab}"
+WScript.Sleep 400
+ WshShell.SendKeys "{enter}"
+WScript.Sleep 400
 
 strFileUrl = "" 
 
