@@ -26,10 +26,10 @@ Set oWSH = CreateObject("WScript.Shell")
     End If
  End Function
 
-dateCode = Right("0" & Month(Date), 2) &  Right("0" & Day(Date), 2) &  Right(Year(Date), 2)
+dateCode = Right("0" & Day(Date)-1, 2) &  Right("0" & Month(Date), 2) &  Right(Year(Date), 2)
 dailyLink = "CD" & dateCode & ".zip"
 
 
-printf "hi. this is the datecode" & dailyLink
+printf "hi. this is the datecode:  " & dailyLink
 
 wait(4)
